@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Network — Code Launcher</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, sans-serif;
+    background: #0b1120;
+    color: #e0e6f0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    height: 48px;
+    background: #07101f;
+    border-bottom: 1px solid #1a2a40;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: auto;
+  }
+
+  .logo img {
+    height: 26px;
+    width: auto;
+    display: block;
+  }
+
+  .logo-divider {
+    width: 1px;
+    height: 18px;
+    background: #1e3050;
+  }
+
+  .logo-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #7aaddd;
+    letter-spacing: 0.01em;
+  }
+
+  .btn {
+    padding: 5px 13px;
+    border-radius: 6px;
+    border: 1px solid #1e3050;
+    background: #0f1e32;
+    color: #9bbcd6;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .btn:hover { background: #152840; border-color: #2e5a8a; color: #c5ddf0; }
+  .btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .editor-panel {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #1a2a40;
+    min-width: 200px;
+  }
+
+  .tabs {
+    display: flex;
+    background: #07101f;
+    border-bottom: 1px solid #1a2a40;
+    flex-shrink: 0;
+  }
+
+  .tab {
+    padding: 9px 22px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #4a6a88;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .tab:hover { color: #9bbcd6; }
+  .tab.active { color: #4da6ff; border-bottom-color: #4da6ff; }
+
+  .editor-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  textarea {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #060e1c;
+    color: #ccddf0;
+    border: none;
+    outline: none;
+    resize: none;
+    font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
+    padding: 16px;
+    tab-size: 2;
+    display: none;
+  }
+  textarea.active { display: block; }
+  textarea::placeholder { color: #2a4060; }
+
+  .preview-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .preview-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    height: 36px;
+    background: #07101f;
+    border-bottom: 1px solid #1a2a40;
+    flex-shrink: 0;
+  }
+
+  .preview-bar span {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #3a5a78;
+    margin-right: auto;
+  }
+
+  iframe {
+    flex: 1;
+    border: none;
+    background: #fff;
+  }
+
+  .resizer {
+    width: 4px;
+    background: #1a2a40;
+    cursor: col-resize;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .resizer:hover { background: #2e5a8a; }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="https://codehs.com/uploads/9af4a6069afc6e7899677a677436f2b9" alt="Story Network">
+    <div class="logo-divider"></div>
+    <span class="logo-label">Code Launcher</span>
+  </div>
+
+  <button class="btn" onclick="openNewTab()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    New Tab
+  </button>
+  <button class="btn" id="shareBtn" onclick="shareCode()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    Share
+  </button>
+  <button class="btn" onclick="toggleFullscreen()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+    Fullscreen
+  </button>
+</header>
+
+<div class="main" id="main">
+  <div class="editor-panel" id="editorPanel">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('html', this)">HTML</div>
+      <div class="tab" onclick="switchTab('css', this)">CSS</div>
+      <div class="tab" onclick="switchTab('js', this)">JS</div>
+    </div>
+    <div class="editor-wrap">
+      <textarea id="html-editor" class="active" placeholder="&lt;!-- HTML here --&gt;" spellcheck="false"></textarea>
+      <textarea id="css-editor" placeholder="/* CSS here */" spellcheck="false"></textarea>
+      <textarea id="js-editor" placeholder="// JavaScript here" spellcheck="false"></textarea>
+    </div>
+  </div>
+
+  <div class="resizer" id="resizer"></div>
+
+  <div class="preview-panel">
+    <div class="preview-bar">
+      <div class="dot"></div>
+      <span>Live Preview</span>
+    </div>
+    <iframe id="preview" sandbox="allow-scripts"></iframe>
+  </div>
+</div>
+
+<script>
+  const editors = { html: null, css: null, js: null };
+  let debounceTimer;
+
+  function init() {
+    editors.html = document.getElementById('html-editor');
+    editors.css = document.getElementById('css-editor');
+    editors.js = document.getElementById('js-editor');
+
+    const starter = {
+      html: `<h1>Hello, World!</h1>\n<p>Edit the code on the left to see live changes here.</p>\n<button onclick="greet()">Click me</button>`,
+      css: `body {\n  font-family: system-ui, sans-serif;\n  padding: 2rem;\n  background: #f0f6ff;\n  color: #1a2a40;\n}\n\nh1 { color: #1a6abf; }\n\nbutton {\n  padding: 8px 20px;\n  background: #1a6abf;\n  color: white;\n  border: none;\n  border-radius: 6px;\n  cursor: pointer;\n  margin-top: 1rem;\n}\n\nbutton:hover { background: #155499; }`,
+      js: `function greet() {\n  alert('Hello from Story Network Code Launcher!');\n}`
+    };
+
+    for (const [lang, val] of Object.entries(starter)) {
+      editors[lang].value = val;
+      editors[lang].addEventListener('input', scheduleUpdate);
+      editors[lang].addEventListener('keydown', handleTab);
+    }
+
+    updatePreview();
+
+    const resizer = document.getElementById('resizer');
+    const panel = document.getElementById('editorPanel');
+    const main = document.getElementById('main');
+    let dragging = false, startX = 0, startW = 0;
+
+    resizer.addEventListener('mousedown', e => {
+      dragging = true;
+      startX = e.clientX;
+      startW = panel.offsetWidth;
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+    });
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      const newW = Math.max(180, Math.min(startW + dx, main.offsetWidth - 220));
+      panel.style.width = newW + 'px';
+    });
+    document.addEventListener('mouseup', () => {
+      dragging = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    });
+  }
+
+  function switchTab(tab, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('textarea').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    editors[tab].classList.add('active');
+  }
+
+  function handleTab(e) {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const ta = e.target;
+      const start = ta.selectionStart, end = ta.selectionEnd;
+      ta.value = ta.value.slice(0, start) + '  ' + ta.value.slice(end);
+      ta.selectionStart = ta.selectionEnd = start + 2;
+      scheduleUpdate();
+    }
+  }
+
+  function scheduleUpdate() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(updatePreview, 300);
+  }
+
+  function updatePreview() {
+    const doc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${editors.css.value}</style></head><body>${editors.html.value}<script>${editors.js.value}<\/script></body></html>`;
+    document.getElementById('preview').srcdoc = doc;
+  }
+
+  function buildDoc() {
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${editors.css.value}</style></head><body>${editors.html.value}<script>${editors.js.value}<\/script></body></html>`;
+  }
+
+  function openNewTab() {
+    const blob = new Blob([buildDoc()], { type: 'text/html' });
+    window.open(URL.createObjectURL(blob), '_blank');
+  }
+
+  function shareCode() {
+    const data = { html: editors.html.value, css: editors.css.value, js: editors.js.value };
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    const url = window.location.href.split('?')[0] + '?code=' + encoded;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById('shareBtn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+      setTimeout(() => btn.innerHTML = orig, 2000);
+    });
+  }
+
+  function toggleFullscreen() {
+    const frame = document.getElementById('preview');
+    if (!document.fullscreenElement) {
+      frame.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  function loadFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    if (!code) return;
+    try {
+      const data = JSON.parse(decodeURIComponent(escape(atob(code))));
+      if (data.html) editors.html.value = data.html;
+      if (data.css) editors.css.value = data.css;
+      if (data.js) editors.js.value = data.js;
+      updatePreview();
+    } catch(e) {}
+  }
+
+  init();
+  loadFromUrl();
+</script>
+</body>
+</html>
