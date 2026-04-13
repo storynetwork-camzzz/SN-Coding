@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>GN Math Launcher</title>
+</head>
+<body>
+<script>
+const SOURCE = 
+ "https://cdn.jsdelivr.net/gh/storynetwork-camzzz/SN-Code-Runner/index.html";
+  
+fetch(SOURCE)
+  .then(r => {
+    if (!r.ok) throw new Error("Failed to fetch");
+    return r.text();
+  })
+  .then(html => {
+    const w = window.open("about:blank", "_blank");
+    if (!w) {
+      alert("Allow popups then reload.");
+      return;
+    }
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+  })
+  .catch(err => {
+    alert("Error loading site: " + err.message);
+  });
+</script>
+</body>
+</html>
