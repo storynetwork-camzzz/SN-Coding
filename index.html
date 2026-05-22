@@ -3,7 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Story Network — Code Launcher</title>
+<title>SN Coding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="https://codehs.com/uploads/aa28224026ed2b30c50797abbdb3ba59">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -433,6 +437,141 @@
     outline: 2px solid #4da6ff !important;
     background: rgba(77,166,255,0.08) !important;
   }
+
+
+  /* Story Network reskin */
+  :root {
+    --primary: #0000ff;
+    --primary-rgb: 0, 0, 255;
+    --primary-glow: rgba(0, 0, 255, 0.35);
+    --primary-dim: rgba(0, 0, 255, 0.1);
+    --grad-1: #001aff;
+    --grad-2: #00c3ff;
+    --bg: #050505;
+    --glass-strong: rgba(10, 10, 24, 0.78);
+    --line: rgba(255, 255, 255, 0.095);
+    --text: #f0f0f0;
+    --muted: rgba(240, 240, 240, 0.48);
+    --panel: rgba(5, 8, 18, 0.82);
+    --panel-deep: rgba(2, 4, 12, 0.92);
+  }
+
+  body {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: url('https://codehs.com/uploads/1c3ec8c25dd5356307a40cd9b992992d') center/cover no-repeat;
+    filter: saturate(1.08);
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to bottom, rgba(5,5,5,0.74), rgba(5,5,5,0.58) 44%, rgba(5,5,5,0.78)),
+      radial-gradient(ellipse at 18% 50%, rgba(var(--primary-rgb),0.14), transparent 58%),
+      radial-gradient(ellipse at 82% 18%, rgba(0,195,255,0.11), transparent 48%);
+    pointer-events: none;
+  }
+
+  header {
+    height: 64px;
+    padding: 0 18px 0 22px;
+    background: rgba(5,5,5,0.65);
+    backdrop-filter: blur(28px) saturate(1.5);
+    -webkit-backdrop-filter: blur(28px) saturate(1.5);
+    border-bottom: 2px solid var(--primary);
+    box-shadow: 0 0 36px var(--primary-glow);
+  }
+  .main { padding-top: 0; }
+  .logo img {
+    height: 36px;
+    width: 36px;
+    object-fit: contain;
+    border-radius: 9px;
+    filter: drop-shadow(0 0 12px var(--primary-glow));
+  }
+  .logo-label {
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+    background: linear-gradient(90deg, var(--grad-1), var(--grad-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .logo-divider { background: rgba(255,255,255,0.16); }
+
+  .btn, .sidebar-toggle-btn, .action-btn, .vp-btn {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    border-color: var(--line);
+    background: rgba(255,255,255,0.04);
+    color: var(--muted);
+    backdrop-filter: blur(14px);
+  }
+  .btn, .sidebar-toggle-btn { min-height: 36px; border-radius: 10px; font-weight: 700; }
+  .btn:hover, .sidebar-toggle-btn:hover, .action-btn:hover, .vp-btn:hover {
+    border-color: rgba(var(--primary-rgb),0.45);
+    background: var(--primary-dim);
+    color: var(--text);
+    box-shadow: 0 0 16px var(--primary-glow);
+  }
+
+  .lang-sidebar, .tabs, .editor-actions, .find-bar, .preview-bar, .console-bar {
+    background: var(--glass-strong);
+    border-color: var(--line);
+    backdrop-filter: blur(18px);
+  }
+  .editor-panel, .resizer, .preview-panel { border-color: var(--line); }
+  .editor-panel { background: var(--panel); }
+  .resizer { background: rgba(255,255,255,0.09); }
+  .resizer:hover { background: var(--primary); box-shadow: 0 0 18px var(--primary-glow); }
+  .tab { color: var(--muted); font-weight: 700; }
+  .tab:hover, .tab.active { color: var(--text); }
+  .tab.active { border-bottom-color: var(--primary); }
+  .lang-btn { color: var(--muted); font-weight: 700; }
+  .lang-btn:hover, .lang-btn.active { color: var(--text); background: var(--primary-dim); }
+  .lang-btn.active { border-left-color: var(--primary); }
+  textarea {
+    background: rgba(0,0,0,0.46);
+    color: rgba(240,240,240,0.9);
+    font-size: 13px;
+  }
+  textarea::placeholder { color: rgba(240,240,240,0.24); }
+  .iframe-wrap { background: rgba(0,0,0,0.5); }
+  iframe.vp-tablet, iframe.vp-mobile { border-color: rgba(var(--primary-rgb),0.38); box-shadow: 0 0 28px rgba(0,0,0,0.4); }
+  .find-bar input {
+    background: rgba(0,0,0,0.35);
+    border-color: var(--line);
+    color: var(--text);
+    border-radius: 9999px;
+    font-family: Consolas, 'Courier New', monospace;
+  }
+  .find-bar input:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-glow); }
+  .find-info, .line-count, .preview-bar-label, .console-bar span, .lang-group-label { color: var(--muted); }
+  .console-panel { background: var(--panel-deep); border-color: var(--line); }
+  .console-log { color: rgba(240,240,240,0.72); }
+  .dot { background: linear-gradient(135deg, var(--grad-1), var(--grad-2)); box-shadow: 0 0 12px var(--primary-glow); }
+
+  @media (max-width: 760px) {
+    header { gap: 6px; padding: 0 10px; overflow-x: auto; }
+    .logo-label { display: none; }
+    .main { flex-direction: column; overflow: auto; }
+    .lang-sidebar { display: none; }
+    .editor-panel { width: 100% !important; min-height: 52vh; border-right: 0; border-bottom: 1px solid var(--line); }
+    .resizer { display: none; }
+    .preview-panel { min-height: 48vh; }
+    .find-bar { flex-wrap: wrap; }
+    .find-bar .find-close { margin-left: 0; }
+  }
+
 </style>
 </head>
 <body>
@@ -441,9 +580,9 @@
 
 <header>
   <div class="logo">
-    <img src="https://codehs.com/uploads/9af4a6069afc6e7899677a677436f2b9" alt="Story Network">
+    <img src="https://codehs.com/uploads/aa28224026ed2b30c50797abbdb3ba59" alt="SN Coding">
     <div class="logo-divider"></div>
-    <span class="logo-label">Code Launcher</span>
+    <span class="logo-label">SN Coding</span>
   </div>
 
   <button class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="cycleSidebar()" title="Toggle language sidebar">
@@ -643,7 +782,7 @@
     editors.single = document.getElementById('single-editor');
 
     for (const key of ['html','css','js','single']) {
-      editors[key].addEventListener('input', () => { scheduleUpdate(); updateLineCount(); });
+      editors[key].addEventListener('input', () => { scheduleUpdate(); updateLineCount(); if (findOpen) doFind(true); });
       editors[key].addEventListener('keydown', handleTab);
       editors[key].addEventListener('keydown', handleAutoPair);
     }
@@ -664,8 +803,8 @@
     });
 
     document.addEventListener('keydown', e => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'f') { e.preventDefault(); toggleFind(true); }
-      if ((e.ctrlKey || e.metaKey) && e.key === 'h') { e.preventDefault(); toggleFind(true); }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') { e.preventDefault(); openFindFromShortcut(); }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'h') { e.preventDefault(); openFindFromShortcut(true); }
       if (e.key === 'Escape' && findOpen) closeFind();
     });
 
@@ -748,6 +887,7 @@
 
     updatePreview();
     updateLineCount();
+    if (findOpen) doFind(true);
     autoResizeAll();
   }
 
@@ -760,6 +900,7 @@
     editors[tab].classList.add('active');
     editors[tab].style.display = 'block';
     updateLineCount();
+    if (findOpen) doFind(true);
     autoResize(editors[tab]);
   }
 
@@ -771,6 +912,7 @@
 
   // ── Auto-resize textarea to content ───────────────────────────────────────
   function autoResize(ta) {
+    if (!ta || ta.style.display === 'none') return;
     ta.style.height = 'auto';
     const scroll = document.getElementById('editorScroll');
     ta.style.height = Math.max(ta.scrollHeight, scroll.clientHeight) + 'px';
@@ -876,54 +1018,101 @@
     return editors.single;
   }
 
-  function toggleFind(forceOpen) {
+  function openFindFromShortcut(focusReplace = false) {
+    const ta = getActiveEditor();
+    const findInput = document.getElementById('findInput');
+    if (ta && ta.selectionStart !== ta.selectionEnd) {
+      const selected = ta.value.slice(ta.selectionStart, ta.selectionEnd);
+      if (!selected.includes('\n')) findInput.value = selected;
+    }
+    toggleFind(true, focusReplace);
+  }
+
+  function toggleFind(forceOpen, focusReplace = false) {
     findOpen = forceOpen !== undefined ? forceOpen : !findOpen;
     document.getElementById('findBar').classList.toggle('open', findOpen);
     document.getElementById('findBtn').classList.toggle('active-btn', findOpen);
-    if (findOpen) { document.getElementById('findInput').focus(); doFind(); }
-    else clearFindHighlights();
+    if (findOpen) {
+      doFind(true);
+      const target = focusReplace ? document.getElementById('replaceInput') : document.getElementById('findInput');
+      target.focus();
+      target.select();
+    } else {
+      clearFindHighlights();
+      getActiveEditor()?.focus();
+    }
   }
 
-  function closeFind() { findOpen = false; document.getElementById('findBar').classList.remove('open'); document.getElementById('findBtn').classList.remove('active-btn'); clearFindHighlights(); }
+  function closeFind() {
+    findOpen = false;
+    document.getElementById('findBar').classList.remove('open');
+    document.getElementById('findBtn').classList.remove('active-btn');
+    clearFindHighlights();
+    getActiveEditor()?.focus();
+  }
 
-  function doFind() {
+  function doFind(keepNearest = false) {
     const q = document.getElementById('findInput').value;
+    const info = document.getElementById('findInfo');
+    const ta = getActiveEditor();
+    const cursor = ta ? ta.selectionStart : 0;
     findMatches = [];
     findIdx = -1;
-    if (!q) { document.getElementById('findInfo').textContent = ''; return; }
-    const ta = getActiveEditor();
-    if (!ta) return;
-    const text = ta.value;
+    if (!q) { info.textContent = ''; return; }
+    if (!ta) { info.textContent = 'No editor'; return; }
+
+    const text = ta.value.toLowerCase();
+    const needle = q.toLowerCase();
     let i = 0;
-    while (true) {
-      const idx = text.toLowerCase().indexOf(q.toLowerCase(), i);
+    while (needle && i <= text.length) {
+      const idx = text.indexOf(needle, i);
       if (idx === -1) break;
       findMatches.push(idx);
-      i = idx + 1;
+      i = idx + Math.max(needle.length, 1);
     }
-    document.getElementById('findInfo').textContent = findMatches.length ? `1 / ${findMatches.length}` : 'No results';
-    if (findMatches.length) { findIdx = 0; selectMatch(0); }
+
+    if (!findMatches.length) {
+      info.textContent = 'No results';
+      return;
+    }
+
+    findIdx = keepNearest ? findMatches.findIndex(pos => pos >= cursor) : 0;
+    if (findIdx === -1) findIdx = 0;
+    selectMatch(findIdx);
+  }
+
+  function scrollMatchIntoView(ta, start) {
+    const scroll = document.getElementById('editorScroll');
+    const before = ta.value.slice(0, start);
+    const lineNum = before.split('\n').length;
+    const lineH = parseFloat(getComputedStyle(ta).lineHeight) || 21;
+    scroll.scrollTop = Math.max(0, (lineNum - 5) * lineH);
   }
 
   function selectMatch(i) {
     const ta = getActiveEditor();
-    if (!ta || !findMatches.length) return;
     const q = document.getElementById('findInput').value;
+    if (!ta || !q || !findMatches.length) return;
+    findIdx = i;
     const start = findMatches[i];
     ta.focus();
     ta.setSelectionRange(start, start + q.length);
-    document.getElementById('findInfo').textContent = `${i+1} / ${findMatches.length}`;
+    scrollMatchIntoView(ta, start);
+    document.getElementById('findInfo').textContent = `${i + 1} / ${findMatches.length}`;
   }
 
-  function findNext() { if (!findMatches.length) return; findIdx = (findIdx + 1) % findMatches.length; selectMatch(findIdx); }
-  function findPrev() { if (!findMatches.length) return; findIdx = (findIdx - 1 + findMatches.length) % findMatches.length; selectMatch(findIdx); }
+  function findNext() { if (!findMatches.length) return doFind(true); selectMatch((findIdx + 1) % findMatches.length); }
+  function findPrev() { if (!findMatches.length) return doFind(true); selectMatch((findIdx - 1 + findMatches.length) % findMatches.length); }
   function clearFindHighlights() { findMatches = []; findIdx = -1; document.getElementById('findInfo').textContent = ''; }
 
   function findKey(e) {
-    if (e.key === 'Enter') { e.shiftKey ? findPrev() : findNext(); }
-    if (e.key === 'Escape') closeFind();
+    if (e.key === 'Enter') { e.preventDefault(); e.shiftKey ? findPrev() : findNext(); }
+    if (e.key === 'Escape') { e.preventDefault(); closeFind(); }
   }
-  function replaceKey(e) { if (e.key === 'Enter') doReplace(); }
+  function replaceKey(e) {
+    if (e.key === 'Enter') { e.preventDefault(); e.shiftKey ? doReplaceAll() : doReplace(); }
+    if (e.key === 'Escape') { e.preventDefault(); closeFind(); }
+  }
 
   function doReplace() {
     const q = document.getElementById('findInput').value;
@@ -931,12 +1120,11 @@
     if (!q || findIdx < 0 || !findMatches.length) return;
     const ta = getActiveEditor();
     const start = findMatches[findIdx];
-    ta.setSelectionRange(start, start + q.length);
-    const before = ta.value.slice(0, start);
-    const after = ta.value.slice(start + q.length);
-    ta.value = before + r + after;
-    scheduleUpdate(); updateLineCount();
-    doFind();
+    ta.value = ta.value.slice(0, start) + r + ta.value.slice(start + q.length);
+    ta.setSelectionRange(start, start + r.length);
+    scheduleUpdate();
+    updateLineCount();
+    doFind(true);
   }
 
   function doReplaceAll() {
@@ -944,9 +1132,11 @@
     const r = document.getElementById('replaceInput').value;
     if (!q) return;
     const ta = getActiveEditor();
-    const regex = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
-    ta.value = ta.value.replace(regex, r);
-    scheduleUpdate(); updateLineCount(); doFind();
+    const pattern = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    ta.value = ta.value.replace(new RegExp(pattern, 'gi'), r);
+    scheduleUpdate();
+    updateLineCount();
+    doFind(true);
   }
 
   // ── Console ────────────────────────────────────────────────────────────────
@@ -1017,7 +1207,10 @@
   }
 
   function openNewTab() {
-    const doc = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${editors.css.value}</style></head><body>${editors.html.value}<script>${editors.js.value}<\/script></body></html>`;
+    const escapedSingle = editors.single.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const doc = currentLang === 'web'
+      ? `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>${editors.css.value}</style></head><body>${editors.html.value}<script>${editors.js.value}<\/script></body></html>`
+      : `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{margin:0;background:#050505;color:#f0f0f0;font:14px/1.7 Consolas,monospace;padding:24px;white-space:pre-wrap}</style></head><body>${escapedSingle}</body></html>`;
     const blob = new Blob([doc], { type: 'text/html' });
     window.open(URL.createObjectURL(blob), '_blank');
   }
@@ -1060,7 +1253,7 @@
     inspectActive = !inspectActive;
     const btn = document.getElementById('inspectToggleBtn');
     const frame = document.getElementById('preview');
-    btn.classList.toggle('active', inspectActive);
+    if (btn) btn.classList.toggle('active', inspectActive);
     if (inspectActive) {
       frame.style.pointerEvents = 'none';
       document.getElementById('iframeWrap').classList.add('inspect-active');
@@ -1250,8 +1443,8 @@
 
     // Flash highlight effect
     ta.style.transition = 'background 0.1s';
-    ta.style.background = '#1a2e4a';
-    setTimeout(() => { ta.style.background = '#060e1c'; }, 600);
+    ta.style.background = 'rgba(0, 60, 160, 0.42)';
+    setTimeout(() => { ta.style.background = ''; }, 600);
 
     // Turn off inspect after click
     toggleInspect();
